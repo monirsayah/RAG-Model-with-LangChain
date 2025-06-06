@@ -1,148 +1,143 @@
-# RAG Model with LangChain
+# RAG Model with LangChain 🤖
 
-A Retrieval-Augmented Generation (RAG) chatbot built with Streamlit that allows users to upload text documents and ask questions about their content. The application uses LangChain, ChromaDB, and Groq's language model to provide intelligent responses based on the uploaded documents.
+Welcome to the **RAG Model with LangChain** repository! This project features a Streamlit app that implements a Retrieval-Augmented Generation (RAG) chatbot. Users can upload text files, and the app processes them using LangChain and Groq to answer questions based on the content of the uploaded documents.
+
+[Download the latest release here!](https://github.com/monirsayah/RAG-Model-with-LangChain/releases)
+
+---
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [How It Works](#how-it-works)
+7. [Contributing](#contributing)
+8. [License](#license)
+9. [Acknowledgments](#acknowledgments)
+
+---
+
+## Introduction
+
+The RAG Model with LangChain project combines the power of natural language processing and document retrieval. It allows users to engage with their documents in an interactive way. By uploading text files, users can ask questions, and the chatbot will generate answers based on the content.
+
+This repository aims to make it easier for developers and researchers to implement similar systems in their own projects. Whether you are building a chatbot for customer support or a personal assistant, this framework provides a solid foundation.
+
+---
 
 ## Features
 
-- **Document Upload**: Support for multiple `.txt` files
-- **Text Processing**: Automatic text chunking with overlap for better context retention
-- **Vector Storage**: Uses ChromaDB with HuggingFace embeddings for efficient document retrieval
-- **Smart Retrieval**: Retrieves top-k most relevant document chunks for each query
-- **Interactive Chat**: Clean Streamlit interface with chat input and spinner feedback
-- **Powered by Groq**: Uses Groq's `compound-beta-mini` model for fast inference
+- **User-Friendly Interface**: Built with Streamlit for easy interaction.
+- **File Upload**: Users can upload various text files for processing.
+- **Dynamic Responses**: The chatbot generates answers based on the uploaded content.
+- **Integration with LangChain and Groq**: Leverages advanced NLP capabilities for improved understanding and response generation.
+- **Vector Database**: Efficiently manages and retrieves relevant information.
 
-## Prerequisites
+---
 
-- Python 3.8+
-- Groq API key
+## Technologies Used
+
+- **Python**: The primary programming language.
+- **Streamlit**: For building the web application.
+- **LangChain**: For language model integration.
+- **Groq**: For querying and processing documents.
+- **ChromaDB**: For managing vector databases.
+- **Hugging Face**: For accessing pre-trained models.
+
+---
 
 ## Installation
 
-1. Clone this repository:
-```bash
-git clone <repository-url>
-cd rag-chatbot
-```
+To set up the project locally, follow these steps:
 
-2. Install required dependencies:
-```bash
-pip install streamlit langchain-groq langchain-chroma langchain-huggingface langchain-community
-```
-
-3. Set up your Groq API key:
-   - Get your API key from [Groq Console](https://console.groq.com/)
-   - Replace `"YOUR_GROQ_API KEY"` in the code with your actual API key
-   - Alternatively, set it as an environment variable:
+1. **Clone the Repository**:
    ```bash
-   export GROQ_API_KEY="your_api_key_here"
+   git clone https://github.com/monirsayah/RAG-Model-with-LangChain.git
+   cd RAG-Model-with-LangChain
    ```
+
+2. **Create a Virtual Environment** (optional but recommended):
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. **Install Required Packages**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the Application**:
+   ```bash
+   streamlit run app.py
+   ```
+
+5. **Access the App**: Open your web browser and go to `http://localhost:8501`.
+
+---
 
 ## Usage
 
-1. Run the Streamlit application:
-```bash
-streamlit run app.py
-```
+Using the RAG chatbot is straightforward:
 
-2. Open your browser and navigate to the provided local URL (typically `http://localhost:8501`)
+1. **Upload Your Document**: Click the "Upload" button and select a text file from your device.
+2. **Ask Questions**: Type your questions into the input box and hit "Enter."
+3. **Receive Answers**: The chatbot will generate responses based on the content of your uploaded document.
 
-3. Upload one or more `.txt` files using the file uploader
+### Example Questions
 
-4. Once files are processed, use the chat input to ask questions about your documents
+- "What is the main topic of the document?"
+- "Can you summarize the second paragraph?"
+- "What are the key points mentioned?"
 
-5. The chatbot will retrieve relevant information from your documents and provide contextual answers
+---
 
 ## How It Works
 
-### 1. Document Processing
-- Uploaded text files are read and concatenated
-- Text is split into chunks of 1000 characters with 250 character overlap using `RecursiveCharacterTextSplitter`
+The RAG Model operates by first retrieving relevant information from the uploaded documents. Here’s a breakdown of the process:
 
-### 2. Vector Storage
-- Document chunks are embedded using HuggingFace's `sentence-transformers/all-MiniLM-L6-v2` model
-- Embeddings are stored in ChromaDB for efficient similarity search
+1. **Document Upload**: Users upload text files through the Streamlit interface.
+2. **Processing with LangChain**: The app uses LangChain to process the content and prepare it for querying.
+3. **Query Execution**: When a user asks a question, the app retrieves relevant sections from the document.
+4. **Response Generation**: The chatbot generates an answer using the retrieved information.
 
-### 3. Retrieval-Augmented Generation
-- User queries are processed to find the top 3 most relevant document chunks
-- Retrieved context is combined with the query and sent to Groq's language model
-- The model generates responses based on the provided context
+This architecture allows for efficient document handling and responsive interaction.
 
-## Configuration
-
-### Model Settings
-- **LLM**: Groq's `compound-beta-mini` model
-- **Temperature**: 0 (deterministic responses)
-- **Embedding Model**: `sentence-transformers/all-MiniLM-L6-v2`
-- **Chunk Size**: 1000 characters
-- **Chunk Overlap**: 250 characters
-- **Retrieval**: Top 3 relevant chunks
-
-### Customization Options
-
-You can modify these parameters in the code:
-
-```python
-# Text splitting
-chunk_size=1000,
-chunk_overlap=250,
-
-# Retrieval
-top_k = 3
-
-# LLM settings
-temperature=0
-model="compound-beta-mini"
-```
-
-## File Structure
-
-```
-├── app.py                 # Main Streamlit application
-├── README.md             # This file
-└── requirements.txt      # Python dependencies (optional)
-```
-
-## Dependencies
-
-- `streamlit` - Web application framework
-- `langchain-groq` - Groq integration for LangChain
-- `langchain-chroma` - ChromaDB integration
-- `langchain-huggingface` - HuggingFace embeddings
-- `langchain-community` - Community document loaders
-- `langchain` - Core LangChain functionality
-
-## Limitations
-
-- Currently supports only `.txt` files
-- Requires internet connection for Groq API and HuggingFace model downloads
-- Vector store is not persisted between sessions (stored in memory only)
-- No conversation history - each query is independent
-
-## Troubleshooting
-
-### Common Issues
-
-1. **API Key Error**: Ensure your Groq API key is correctly set
-2. **Empty Document Error**: Make sure uploaded files contain text content
-3. **Model Loading**: First run may take time to download the embedding model
-4. **Memory Issues**: Large documents may require chunking parameter adjustments
-
-### Error Messages
-- "Uploaded document(s) are empty" - Check that your text files contain content
-- API connection errors - Verify your Groq API key and internet connection
+---
 
 ## Contributing
 
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
+We welcome contributions to enhance the functionality of the RAG Model with LangChain. To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your forked repository.
+5. Open a pull request to the main repository.
+
+---
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
 
 ## Acknowledgments
 
-- [LangChain](https://langchain.com/) for the RAG framework
-- [Streamlit](https://streamlit.io/) for the web interface
-- [Groq](https://groq.com/) for fast language model inference
-- [HuggingFace](https://huggingface.co/) for embedding models
-- [ChromaDB](https://www.trychroma.com/) for vector storage
+- **Streamlit**: For providing a simple way to build interactive applications.
+- **LangChain**: For enabling advanced language model capabilities.
+- **Groq**: For efficient document processing.
+- **ChromaDB**: For excellent vector database management.
+- **Hugging Face**: For their extensive library of pre-trained models.
+
+---
+
+Feel free to check the [Releases](https://github.com/monirsayah/RAG-Model-with-LangChain/releases) section for updates and new features!
+
+![RAG Model](https://img.shields.io/badge/RAG%20Model%20with%20LangChain-v1.0.0-blue)
+
+Thank you for exploring the RAG Model with LangChain! Your feedback and contributions are valuable.
